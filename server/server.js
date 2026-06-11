@@ -3,38 +3,38 @@ const cors = require('cors');
 const { ApolloServer } = require('@apollo/server');
 const { expressMiddleware } = require('@apollo/server/express4');
 const path = require('path');
+
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
-const uploadRoute = require('./routes/upload');
-const emailRoute = require('./routes/email');
 
+const PORT = process.env.PORT || 3001;
 
-const PORT = 3001;
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+});
+
 const app = express();
 
 const startApolloServer = async () => {
   await server.start();
 
   app.use(cors({
-    origin: "*"
+    origin: '*',
   }));
 
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
 
-  
-  app.use('/api', uploadRoute);
-  app.use('/api/email', emailRoute); 
+  app.use('/graphql', expressMiddleware(server));
 
   if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '../client/dist')));
+
     app.get('*', (req, res) => {
       res.sendFile(path.join(__dirname, '../client/dist/index.html'));
     });
   }
-
-  app.use('/graphql', expressMiddleware(server));
 
   db.once('open', () => {
     app.listen(PORT, () => {

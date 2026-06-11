@@ -1,41 +1,22 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-import { createBrowserRouter, RouterProvider } from "react-router-dom"
-import Home from './pages/Home.jsx'
-
-import Menu from './pages/Menu.jsx'
-import Order from './pages/Order.jsx'
-import Booking from './pages/Booking.jsx'
-import Contact from './pages/Contact.jsx'
-import Login from './pages/Login.jsx'
-import NewUser from './pages/NewUser.jsx'
-import Inventory from './pages/Inventory.jsx'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
-  createHttpLink
+  createHttpLink,
 } from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
-import Auth from './utils/auth';
+
+import App from './App.jsx';
+import Home from './pages/Home.jsx';
 
 const httpLink = createHttpLink({
-  uri: '/graphql'
-});
-
-const authLink = setContext((_, { headers }) => {
-  const token = localStorage.getItem('id_token');
-  return {
-    headers: {
-      ...headers,
-      authorization: token ? `Bearer ${token}` : '',
-    }
-  };
+  uri: '/graphql',
 });
 
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: httpLink,
   cache: new InMemoryCache(),
 });
 
@@ -43,39 +24,15 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
-    errorElement: '',
+    errorElement: <h1>Page not found</h1>,
     children: [
       {
         index: true,
-        element: <Home />
+        element: <Home />,
       },
-      {
-        path: '/Menu',
-        element: <Menu />
-      },
-      {
-        path: '/Order',
-        element: Auth.loggedIn() ? <Order /> : <Login />
-      },
-      {
-        path: '/Contact',
-        element: <Contact />
-      },
-      {
-        path: '/Login',
-        element: Auth.loggedIn() ? <Home /> : <Login />
-      },
-      {
-        path: '/NewUser',
-        element: Auth.loggedIn() ? <Home /> : <NewUser />
-      },
-      {
-        path: '/Inventory',
-        element: Auth.loggedIn() && Auth.isAdmin() ? <Inventory /> : <Home />
-      }
-    ]
-  }
-])
+    ],
+  },
+]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -83,4 +40,4 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <RouterProvider router={router} />
     </ApolloProvider>
   </React.StrictMode>
-)
+);

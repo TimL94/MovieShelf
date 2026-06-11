@@ -1,69 +1,31 @@
 const typeDefs = `
-type User {
+  type Movie {
     _id: ID
-    email: String
-    password: String
-    admin: Boolean
-}
+    title: String
+    rating: Int
+    createdAt: String
+    updatedAt: String
+  }
 
-type Auth {
-    token: ID!
-    user: User
-}
+  type Query {
+    movies: [Movie]
+    movie(movieId: ID!): Movie
+  }
 
-type MenuItem {
-    _id: ID
-    name: String
-    category: String
-    price: [Price!]!
-    strain: String
-    imageUrl: String
-    effect: [String]
-}
+  type Mutation {
+    addMovie(
+      title: String!
+      rating: Int!
+    ): Movie
 
-type Price {
-  quantity: String!
-  amount: Float!
-}
+    updateMovie(
+      movieId: ID!
+      title: String
+      rating: Int
+    ): Movie
 
-input PriceInput {
-  quantity: String!
-  amount: Float!
-}
-
-type Query {
-    menu: [MenuItem]
-    menuByCategory(category: String!): [MenuItem]
-}
-
-type Query {
-    users: [User]
-    menuItems: [MenuItem]
-}
-
-type Mutation {
-    login(
-        email: String!, 
-        password: String!
-    ): Auth
-
-    addUser( 
-        email: String!, 
-        password: String!, 
-        admin: Boolean
-    ): Auth
-
-    addMenuItem( 
-        name: String!, 
-        category: String!, 
-        price: [PriceInput!]!, 
-        strain: String!,
-        imageUrl: String!,
-        effect: [String]
-    ): MenuItem
-
-    deleteMenuItem(id: ID!): MenuItem
-}
+    deleteMovie(movieId: ID!): Movie
+  }
 `;
 
 module.exports = typeDefs;

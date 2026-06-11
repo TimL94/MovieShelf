@@ -1,13 +1,12 @@
 {
-  "name": "Block Budsters",
+  "name": "movie-tracker",
   "version": "1.0.0",
-  "description": "a MERN web application for the medical dispensary Block Budsters",
+  "description": "a MERN web application for tracking movies",
   "main": "index.js",
   "scripts": {
     "start": "node server/server.js",
     "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm run dev\"",
     "setup": "npm i && cd server && npm i && cd ../client && npm i",
-    "seed": "cd server && npm run seed",
     "build": "cd client && npm run build",
     "render-build": "npm run setup && npm run build"
   },
@@ -15,9 +14,5 @@
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^5.3.0"
-  },
-  "dependencies": {
-    "dotenv": "^16.4.5",
-    "heic2any": "^0.0.4"
   }
 }

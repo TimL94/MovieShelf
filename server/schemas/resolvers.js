@@ -1,49 +1,42 @@
-const { User, MenuItem } = require('../models');
-const { signToken, AuthenticationError } = require('../utils/auth');
+const { Movie } = require('../models');
 
 const resolvers = {
   Query: {
-    users: async () => {
-      return await User.find({});
+    movies: async () => {
+      return await Movie.find({}).sort({ updatedAt: -1 });
     },
-    menuItems: async () => {
-      return await MenuItem.find({});
-    },
-    menuByCategory: async (_, { category }) => {
-      return await MenuItem.find({ category });
+
+    movie: async (parent, { movieId }) => {
+      return await Movie.findById(movieId);
     },
   },
 
   Mutation: {
-    addUser: async (parent, { email, password, admin }) => {
-      const user = await User.create({ email: email.toLowerCase(), password, admin });
-      const token = signToken(user);
-      return { token, user };
+    addMovie: async (parent, { title, rating }) => {
+      return await Movie.create({
+        title,
+        rating,
+      });
     },
 
-    login: async (parent, { email, password }) => {
-      const user = await User.findOne({ email: email.toLowerCase() });
-      if (!user) {
-        throw AuthenticationError('No user found with this email address');
-      }
-      const correctPw = await user.isCorrectPassword(password);
-      if (!correctPw) {
-        throw AuthenticationError('Incorrect credentials');
-      }
-      const token = signToken(user);
-      return { token, user };
+    updateMovie: async (parent, { movieId, title, rating }) => {
+      return await Movie.findByIdAndUpdate(
+        movieId,
+        {
+          title,
+          rating,
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
     },
 
-    addMenuItem: async (parent, { name, category, price, strain, imageUrl, effect }) => {
-      // Create a new MenuItem with the provided imageUrl and other data.
-      const menuItem = await MenuItem.create({ name, category, price, strain, imageUrl, effect });
-      return menuItem;
+    deleteMovie: async (parent, { movieId }) => {
+      return await Movie.findByIdAndDelete(movieId);
     },
-
-    deleteMenuItem: async (parent, { id }) => {
-      return await MenuItem.findByIdAndDelete(id);
-    }
-  }
+  },
 };
 
 module.exports = resolvers;

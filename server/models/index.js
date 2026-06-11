@@ -1,4 +1,3 @@
-const User = require('./User');
-const MenuItem = require('./MenuItem')
+const Movie = require('./Movie');
 
-module.exports = { User, MenuItem };
+module.exports = { Movie };

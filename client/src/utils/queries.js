@@ -1,56 +1,21 @@
-import {  gql } from '@apollo/client';
+import { gql } from '@apollo/client';
 
-export const GET_USERS = gql`
-  query users {
-    users {
+export const QUERY_MOVIES = gql`
+  query Movies {
+    movies {
       _id
-      email
-      password
-      admin
+      title
+      rating
     }
   }
 `;
 
-export const GET_USER = gql`
-  query user($email: String!) {
-    user(email: $email) {
+export const QUERY_SINGLE_MOVIE = gql`
+  query Movie($movieId: ID!) {
+    movie(movieId: $movieId) {
       _id
-      email
-      password
-      admin
-    }
-  }
-`;
-
-export const GET_MENU_ITEMS = gql`
-  query GetMenuItems {
-    menuItems {
-      _id
-      name
-      category
-      strain
-      price {
-        quantity
-        amount
-      }
-      imageUrl
-      effect
-    }
-  }
-`;
-
-export const GET_MENU_BY_CATEGORY = gql`
-  query GetMenuByCategory($category: String!) {
-    menuByCategory(category: $category) {
-      _id
-      name
-      strain
-      imageUrl
-      effect
-      price {
-        quantity
-        amount
-      }
+      title
+      rating
     }
   }
 `;

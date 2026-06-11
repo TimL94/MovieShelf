@@ -1,32 +1,19 @@
-/* Reset all margins and paddings */
 *,
 *::before,
 *::after {
   margin: 0;
   padding: 0;
-  box-sizing: border-box; /* Ensures padding and border are included in width/height */
+  box-sizing: border-box;
 }
 
-/* Remove list styles (bullet points) */
-ul, ol {
+ul,
+ol {
   list-style: none;
 }
 
-/* Remove default hyperlink styles */
 a {
   text-decoration: none;
   color: inherit;
-}
-
-/* Ensure elements are visible and behave consistently */
-article, aside, details, figcaption, figure, footer, header, main, nav, section {
-  display: block;
-}
-
-/* Ensure images are scalable */
-img {
-  max-width: 100%;
-  height: auto;
 }
 
 html {
@@ -34,11 +21,8 @@ html {
 }
 
 body {
-  background-image: url('../src/assets/images/background.jpeg'); /* or use a relative path from public */
-  background-size: cover;
-  background-repeat: repeat;
-  background-position: center;
   min-height: 100vh;
   margin: 0;
-  font-family: sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f4f4f4;
 }
