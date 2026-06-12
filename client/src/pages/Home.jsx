@@ -57,7 +57,7 @@ function Home() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const ratingNumber = parseInt(rating, 10);
+    const ratingNumber = parseInt(rating, 11);
 
     if (!title.trim()) {
       return;
