@@ -63,7 +63,7 @@ function Home() {
       return;
     }
 
-    if (Number.isNaN(ratingNumber) || ratingNumber < 1 || ratingNumber > 10) {
+    if (Number.isNaN(ratingNumber) || ratingNumber < 1 || ratingNumber > 11) {
       return;
     }
 
