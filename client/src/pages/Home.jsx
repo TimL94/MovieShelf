@@ -118,7 +118,7 @@ function Home() {
                   onChange={(event) => setRating(event.target.value)}
                   fullWidth
                   required
-                  inputProps={{ min: 1, max: 10 }}
+                  inputProps={{ min: 1, max: 11 }}
                 />
               </Grid>
 
